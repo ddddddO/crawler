@@ -1,0 +1,25 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>crawl Web </title>
+</head>
+<body>
+  <h1>crawl対象選択画面</h1>
+
+  <form action="host:port" method="get">
+    <button>pi server GET request</button>
+  </form>
+
+  <form action="host:port" method="post">
+    <input name="targetURL" type="text">クロール対象URL
+    <button>pi server POST request</button>
+  </form>
+
+  <form action="host:port" method="post">
+    クロール対象サイト
+    <input name="tURL" type="radio" value="http://blog.livedoor.jp/nwknews/">哲学ニュース
+    <input name="tURL" type="radio" value="http://science-2ch.net/">博士ちゃんねる
+    <button>pi server POST request tURL</button>
+  </form>
+</body>
+</html>

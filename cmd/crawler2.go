@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"os"
 
-	rf "github.com/ddddddO/crawler/readfile"
-
 	"github.com/gin-gonic/gin"
 	gq "github.com/PuerkitoBio/goquery"
 )
@@ -23,11 +21,21 @@ func main() {
 }
 
 func PostHandler(c *gin.Context) {
-	fmt.Println("---post request---")
+	c.Request.ParseForm() // リクエストフォームをパース
+/*
+	fmt.Println("---post request [targetURL]---")
 	var targetURL string
 	targetURL = c.Request.Form["targetURL"][0]
 	fmt.Println(targetURL)
 	fmt.Println()
+*/
+	fmt.Println("---post request [tURL]---")
+	tURL := c.Request.Form["tURL"][0]
+	fmt.Println(tURL)
+	fmt.Println()
+
+	// クライアントから選択したクロール対象サイトごとに、クロール処理を分岐させる
+
 
 	fmt.Println("---start crawl---")
 	// クロール対象urlを記事一覧サイトから取得
@@ -56,28 +64,6 @@ func PostHandler(c *gin.Context) {
 		fmt.Println()
 	}
 
-
-	// 個別クロール対象urlをファイルから取得
-	tUrls, err := rf.ReadFile()
-	if err != nil {
-		fmt.Printf("Error: %v\n", err)
-		os.Exit(1)
-	}
-
-	fmt.Println("---哲学ニュース title---")
-	for _, tUrl := range tUrls {
-		doc, err := gq.NewDocument(tUrl)
-		if err != nil {
-			fmt.Printf("Error: %v\n", err)
-			os.Exit(1)
-		}
-
-		slc := doc.Find("#main > div > div > div.article-outer.hentry > div > div > div.article-header > div.article-title-outer > h2")
-
-		fmt.Printf("Title: %s\n", slc.Text())
-		fmt.Printf("URL  : %s\n", tUrl)
-		fmt.Println()
-	}
-
 	fmt.Println("---end crawl---")
+	c.String(200, tURL)
 }
